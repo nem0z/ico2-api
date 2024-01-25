@@ -1,1 +1,8 @@
-﻿label;categoryLabel;scopeLabel;factor.value;factor.unit.label;factor.unit.symbDiesel;Transport;Commun;3.15;Litre;LDiesel;Transport;Commun;3150;K.Euro;k€Travail ingénieur;Staff;Pôle ingénieur;1.6;Heure;HTravail ingénieur;Staff;Pôle ingénieur;31;K.Euro;k€Diesel;Transport;Pôle - Contracting Inter.;3.65;Litre;LDiesel;Transport;Pôle - Contracting Inter.;2250;K.Euro;k€
+﻿(Vide);label;categoryLabel;scopeLabel;factor.value;factor.unit.label;factor.unit.symb
+;Diesel;Transport;Commun;3.15;Litre;L
+;Diesel;Transport;Commun;3150;K.Euro;k€
+;Travail ingénieur;Staff;Pôle ingénieur;1.6;Heure;H
+;Travail ingénieur;Staff;Pôle ingénieur;31;K.Euro;k€
+;Diesel;Transport;Pôle - Contracting Inter.;3.65;Litre;L
+;Diesel;Transport;Pôle - Contracting Inter.;2250;K.Euro;k€
+;Acier carbone;Materiaux;Commun;720;Tonne;T
