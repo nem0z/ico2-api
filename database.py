@@ -45,7 +45,6 @@ class Factor(Base):
     id = Column(Integer, primary_key=True, index=True)
     valeur = Column(Integer)
     uniteId = Column(Integer, ForeignKey("units.id"))
-    source = Column(String)
     isActive = Column(Boolean)
     itemId = Column(Integer, ForeignKey("items.id"))
 
