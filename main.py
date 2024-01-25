@@ -1,7 +1,9 @@
-from typing import List, Optional
 from fastapi import FastAPI
 
-from database import SessionLocal, Scope, Category, Unit, Item, Factor 
+from typing import List
+from sqlalchemy.orm import joinedload
+
+from database import SessionLocal, Scope, Category, Item, Factor 
 
 app = FastAPI()
 
@@ -9,44 +11,76 @@ app = FastAPI()
 @app.get("/api/scopes")
 async def get_scopes() -> List[dict]:
     db = SessionLocal()
-    scopes = db.query(Scope).all()
-    db.close()
-    return [{"id": scope.id, "label": scope.label} for scope in scopes]
+    
+    try:
+        scopes = db.query(Scope).all()
+        return [
+            {
+                "id": scope.id, 
+                "label": scope.label
+            } for scope in scopes
+        ]
+        
+    finally:
+        db.close()
+
 
 @app.get("/api/categories")
 async def get_categories() -> List[dict]:
     db = SessionLocal()
-    categories = db.query(Category).all()
-    db.close()
-    return [{"id": category.id, "label": category.label} for category in categories]
+    try:
+        categories = db.query(Category).all()
+        return [
+            {
+                "id": category.id, 
+                "label": category.label
+            } for category in categories
+        ]
+        
+    finally:
+        db.close()
+
 
 @app.get("/api/items/lookup")
-async def get_items(category: Optional[int] = None, scope: Optional[int] = None) -> List[dict]:
+async def get_items(category: int = None, scope: int = None) -> List[dict]:
     db = SessionLocal()
 
-    if scope is None:
-        # If scope is not defined, include items with scope "Commun" and the specified category
-        items = db.query(Item).filter(Item.isActive == True, (Item.categoryId == category) if category else True).all()
-    else:
-        # Include items with the specified scope and category
-        items = db.query(Item).filter(Item.scopeId == scope, Item.isActive == True, (Item.categoryId == category) if category else True).all()
+    try:
+        items = db.query(Item).filter(
+            (Item.isActive == True) &
+            (Item.categoryId == category) &
+            ((Item.scopeId == scope) | (Item.scope.has(label="Commun")))
+        ).all()
+          
+        return [
+            {
+                "id": item.id,
+                "label": item.label,
+                "common": item.scope.label == "Commun"
+            } for item in items
+        ]
+        
+    finally:
+        db.close()
 
-    db.close()
-
-    result = []
-    for item in items:
-        result.append({
-            "id": item.id,
-            "label": item.label,
-            "common": item.scope.label == "Commun" if item.scope else False  # Check if the scope is "Commun"
-        })
-
-    return result
 
 @app.get("/api/items/{item_id}/factors")
 async def get_factors(item_id: int) -> List[dict]:
     db = SessionLocal()
-    item_factors = db.query(Factor).filter(Factor.itemId == item_id).all()
-    db.close()
-    result = [{"id": factor.id, "valeur": factor.valeur, "unite": {"id": factor.unite.id, "label": factor.unite.label, "symb": factor.unite.symb}} for factor in item_factors]
-    return result
+    try:
+        item_factors = db.query(Factor).options(joinedload(Factor.unit)).filter(Factor.itemId == item_id & Factor.isActive == True).all()
+
+        return [
+            {
+                "id": factor.id, 
+                "valeur": factor.valeur, 
+                "unit": {
+                    "label": factor.unit.label, 
+                    "symb": factor.unit.symb
+                    }
+                }
+            for factor in item_factors
+        ]
+        
+    finally:
+        db.close()
