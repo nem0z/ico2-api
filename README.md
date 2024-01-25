@@ -116,3 +116,22 @@ Routes :
         ...
     ]
 ```
+
+Imports:
+
+```json
+{
+"label": "Diesel",
+"categoryLabel": "Transport",
+"scopeLabel": "Commun",
+"factors": [
+    {
+        "value": 3.15,
+        "unit": {
+            "label": "Litre",
+            "symb": "L",
+        },
+    }
+    ]
+} 
+```
