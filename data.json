@@ -1,0 +1,65 @@
+[
+    {
+        "label": "Diesel",
+        "categoryLabel": "Transport",
+        "scopeLabel": "Commun",
+        "factors": [
+            {
+                "value": 3.15,
+                "unit": {
+                    "label": "Litre",
+                    "symb": "L"
+                }
+            },
+            {
+                "value": 3150,
+                "unit": {
+                    "label": "K.Euro",
+                    "symb": "k€"
+                }
+            }
+        ]
+    },
+    {
+        "label": "Heure ingénieur",
+        "categoryLabel": "Staff",
+        "scopeLabel": "Pôle - Ingé",
+        "factors": [
+            {
+                "value": 1.6,
+                "unit": {
+                    "label": "Heure",
+                    "symb": "h"
+                }
+            },
+            {
+                "value": 31,
+                "unit": {
+                    "label": "K.Euro",
+                    "symb": "k€"
+                }
+            }
+        ]
+    },
+    {
+        "label": "Diesel",
+        "categoryLabel": "Transport",
+        "scopeLabel": "Pôle - Contracting Inter.",
+        "factors": [
+            {
+                "value": 3.65,
+                "unit": {
+                    "label": "Litre",
+                    "symb": "L"
+                }
+            },
+            {
+                "value": 2250,
+                "unit": {
+                    "label": "K.Euro",
+                    "symb": "k€"
+                }
+            }
+        ]
+    }
+]
