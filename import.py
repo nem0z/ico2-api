@@ -1,4 +1,4 @@
-import json
+import json, csv
 from sqlalchemy.orm import Session
 
 from database import Base, Scope, Category, Unit, Item, Factor, SessionLocal
@@ -23,7 +23,7 @@ def import_data(db_session: Session, data: dict):
     item_label = data["label"]
     scope_label = data["scopeLabel"]
     category_label = data["categoryLabel"]
-    factors_data = data.get("factors", [])
+    factor_data = data["factor"]
 
     # Create or retrieve existing Category, Scope, and Unit
     scope, _ = get_or_create(db_session, Scope, label=scope_label)
@@ -33,23 +33,33 @@ def import_data(db_session: Session, data: dict):
     item, _ = get_or_create(db_session, Item, label=item_label, categoryId=category.id, scopeId=scope.id, isActive=True)
 
     # Create or retrieve existing Factors
-    for factor_data in factors_data:
-        unit_label = factor_data["unit"]["label"]
-        unit_symb = factor_data["unit"]["symb"]
-        unit, _ = get_or_create(db_session, Unit, label=unit_label, symb=unit_symb)
+    unit_label = factor_data["unit"]["label"]
+    unit_symb = factor_data["unit"]["symb"]
+    unit, _ = get_or_create(db_session, Unit, label=unit_label, symb=unit_symb)
 
-        value = factor_data["value"]
-        factor, _ = get_or_create(db_session, Factor, valeur=value, unitId=unit.id, itemId=item.id, isActive=True)
+    value = factor_data["value"]
+    _, _ = get_or_create(db_session, Factor, valeur=value, unitId=unit.id, itemId=item.id, isActive=True)
 
 if __name__ == "__main__":
     db_session = SessionLocal()
     
-    # Load data from the JSON file
-    with open("data.json", "r") as file:
-        data = json.load(file)
+    with open("data.csv", mode="r", encoding="utf-8") as csv_file:
+        csv_reader = csv.DictReader(csv_file, delimiter=";")
+        data = [dict(row) for row in csv_reader]
+
+    formatted_data = []
+    for row in data:
+        formatted_row = {}
+        for key, value in row.items():
+            keys = key.split(".")
+            current_level = formatted_row
+            for k in keys[:-1]:
+                current_level = current_level.setdefault(k, {})
+            current_level[keys[-1]] = value
+        formatted_data.append(formatted_row)
 
         try:
-            for item_data in data:
+            for item_data in formatted_data:
                 import_data(db_session, item_data)
         finally:
             db_session.close()
