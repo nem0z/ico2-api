@@ -49,7 +49,7 @@ Factor :
     {
     "id" : 1,
     "valeur": 13,
-    "uniteId": 1,
+    "unitId": 1,
 
     "source" : "Interne",
     "sourceLabel": "",
@@ -107,7 +107,7 @@ Routes :
         {
             "id" : 1,
             "valeur": 13,
-            "unite": {
+            "unit": {
                 "id": 1,
                 "label": "Litre",
                 "symb": "L"
@@ -121,17 +121,17 @@ Imports:
 
 ```json
 {
-"label": "Diesel",
-"categoryLabel": "Transport",
-"scopeLabel": "Commun",
-"factors": [
-    {
-        "value": 3.15,
-        "unit": {
-            "label": "Litre",
-            "symb": "L",
-        },
-    }
-    ]
+    "label": "Diesel",
+    "categoryLabel": "Transport",
+    "scopeLabel": "Commun",
+    "factors": [
+        {
+            "value": 3.15,
+            "unit": {
+                "label": "Litre",
+                "symb": "L",
+            },
+        }
+        ]
 } 
 ```
