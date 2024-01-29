@@ -1,11 +1,23 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from typing import List
 from sqlalchemy.orm import joinedload
 
 from database import SessionLocal, Scope, Category, Item, Factor 
 
+
 app = FastAPI()
+
+# Configure CORS
+origins = ["http://localhost", "http://localhost:4200"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Routes
 @app.get("/api/scopes")
