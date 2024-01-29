@@ -1,3 +1,4 @@
+import sys
 import json, csv
 from sqlalchemy.orm import Session
 
@@ -40,13 +41,7 @@ def import_data(db_session: Session, data: dict):
     value = factor_data["value"]
     _, _ = get_or_create(db_session, Factor, valeur=value, unitId=unit.id, itemId=item.id, isActive=True)
 
-if __name__ == "__main__":
-    db_session = SessionLocal()
-    
-    with open("data.csv", mode="r", encoding="utf-8") as csv_file:
-        csv_reader = csv.DictReader(csv_file, delimiter=";")
-        data = [dict(row) for row in csv_reader]
-
+def csv_to_dict(data):
     formatted_data = []
     for row in data:
         formatted_row = {}
@@ -57,6 +52,17 @@ if __name__ == "__main__":
                 current_level = current_level.setdefault(k, {})
             current_level[keys[-1]] = value
         formatted_data.append(formatted_row)
+
+    return formatted_data
+
+if __name__ == "__main__":
+    db_session = SessionLocal()
+    
+    with open(sys.argv[1], mode="r", encoding="utf-8") as csv_file:
+        csv_reader = csv.DictReader(csv_file, delimiter=";")
+        data = [dict(row) for row in csv_reader]
+
+        formatted_data = csv_to_dict(data)
 
         try:
             for item_data in formatted_data:
