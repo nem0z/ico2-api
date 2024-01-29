@@ -64,7 +64,7 @@ async def get_items(category: int = None, scope: int = None) -> List[dict]:
         db.close()
 
 
-@app.get("/api/items/{item_id}/factors")
+@app.get("/api/item/{item_id}/factors")
 async def get_factors(item_id: int) -> List[dict]:
     db = SessionLocal()
     try:
