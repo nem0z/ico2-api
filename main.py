@@ -68,7 +68,7 @@ async def get_items(category: int = None, scope: int = None) -> List[dict]:
 async def get_factors(item_id: int) -> List[dict]:
     db = SessionLocal()
     try:
-        item_factors = db.query(Factor).options(joinedload(Factor.unit)).filter(Factor.itemId == item_id & Factor.isActive == True).all()
+        item_factors = db.query(Factor).options(joinedload(Factor.unit)).filter(Factor.itemId == item_id, Factor.isActive == True).all()
 
         return [
             {
