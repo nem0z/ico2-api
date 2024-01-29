@@ -39,7 +39,7 @@ def import_data(db_session: Session, data: dict):
     unit, _ = get_or_create(db_session, Unit, label=unit_label, symb=unit_symb)
 
     value = factor_data["value"]
-    _, _ = get_or_create(db_session, Factor, valeur=value, unitId=unit.id, itemId=item.id, isActive=True)
+    _, _ = get_or_create(db_session, Factor, value=value, unitId=unit.id, itemId=item.id, isActive=True)
 
 def csv_to_dict(data):
     formatted_data = []

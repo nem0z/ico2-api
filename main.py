@@ -85,7 +85,7 @@ async def get_factors(item_id: int) -> List[dict]:
         return [
             {
                 "id": factor.id, 
-                "valeur": factor.valeur, 
+                "value": factor.value, 
                 "unit": {
                     "label": factor.unit.label, 
                     "symb": factor.unit.symb

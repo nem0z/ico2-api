@@ -48,7 +48,7 @@ Factor :
 ```json
     {
     "id" : 1,
-    "valeur": 13,
+    "value": 13,
     "unitId": 1,
 
     "source" : "Interne",
@@ -106,7 +106,7 @@ Routes :
     [
         {
             "id" : 1,
-            "valeur": 13,
+            "value": 13,
             "unit": {
                 "id": 1,
                 "label": "Litre",

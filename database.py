@@ -51,7 +51,7 @@ class Factor(Base):
     __tablename__ = "factors"
 
     id = Column(Integer, primary_key=True, index=True)
-    valeur = Column(Integer)
+    value = Column(Integer)
     unitId = Column(Integer, ForeignKey("units.id"))
     isActive = Column(Boolean)
     itemId = Column(Integer, ForeignKey("items.id"))
